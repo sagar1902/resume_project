@@ -264,11 +264,16 @@ export default function CV2() {
                                                 {startDate ? startDate : "2018-03"} -{" "}
                                                 {endDate ? endDate : "2021-12"}
                                             </Text>
-                                            <Text fontSize={"sm"} as="p">
+                                            <ul>
                                                 {desc
-                                                    ? desc
-                                                    : "Fixed bugs from existing websites and implemented enhancements that significantly improved web functionality and speed."}
-                                            </Text>
+                                                    ? desc.split(/\r?\n/).map((text, index) => {
+                                                        if(text){return (<li key={index}><Text fontSize={"sm"} as="p">
+                                                            {text}
+                                                        </Text></li>)}
+                                                    })
+                                                    : <li>"Fixed bugs from existing websites and implemented enhancements that significantly improved web functionality and speed."</li>}
+                                            </ul>
+
                                         </VStack>
                                     );
                                 })}
