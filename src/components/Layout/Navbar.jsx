@@ -30,7 +30,7 @@ const Navbar = () => {
                     <Text fontSize='lg'><Link to='/'>Home</Link></Text>
                     {/* <Text as='a' href='/templates' fontSize='lg'>Templates</Text> */}
                     <Text fontSize='lg'><Link to='about'>About</Link></Text>
-                    <Button colorScheme={'purple'} fontWeight={'medium'}><Link to='builder'>Create Resume</Link></Button>
+                    <Button colorScheme={'purple'} fontWeight={'medium'}><Link to='templates'>Create Resume</Link></Button>
                 </HStack>
             </Flex>
 

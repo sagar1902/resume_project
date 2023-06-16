@@ -14,15 +14,20 @@ import ResumePreview from './ResumePreview';
 import ThemeSelect from './Theme/ThemeSelect';
 import { useReactToPrint } from 'react-to-print';
 import { useResume } from '../../context';
-import { MdOutlineFileDownload } from 'react-icons/md';
+import { MdOutlineFileDownload, MdOutlineSave } from 'react-icons/md';
 
 const Main = () => {
 
-    const { printElem } = useResume();
+    const state = useResume();
+    const { about, educationList, skills, workList, projects, theme, certificates, template, printElem } = useResume();
 
     const handlePrint = useReactToPrint({
         content: () => printElem.current,
     });
+
+    const handleSave  = () =>{
+        console.log("CALL API to Save",{about, educationList, skills, workList, projects, theme, certificates, template})
+    }
 
     return (
         <Container
@@ -38,7 +43,10 @@ const Main = () => {
 
                 <Stack justifyContent={'space-between'} pt={4} direction={{ base: 'column', sm: 'row' }}>
                     <ThemeSelect />
-                    <Button rightIcon={<MdOutlineFileDownload />} onClick={handlePrint} colorScheme={'purple'}>Download</Button>
+                    <HStack>
+                        <Button rightIcon={<MdOutlineSave />} onClick={handleSave} colorScheme={'purple'}>Save</Button>
+                        <Button rightIcon={<MdOutlineFileDownload />} onClick={handlePrint} colorScheme={'purple'}>Download</Button>
+                    </HStack>
                 </Stack>
 
             </Container>

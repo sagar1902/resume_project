@@ -29,11 +29,20 @@ const componentMap = {
 const ResumePreview = () => {
 
   const { templateName } = useParams();
+  const {template, setTemplate} = useResume();
   const Component = componentMap[templateName];
 
   if (!Component) {
-    return <div>Invalid component name</div>;
+    return <div style={{backgroundColor: 'whitesmoke', padding: '5px', boxShadow: '0px -6px 11px 5px #aaaaaa'}}><img src={'/noTemplate.jpg'}/></div>;
   }
+
+  useEffect(()=>{
+    if(Object.keys(componentMap).includes(templateName)){
+      setTemplate(templateName)
+    }else{
+      setTemplate(null)
+    }
+  },[])
 
   return (
     <>

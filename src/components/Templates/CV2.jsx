@@ -1,8 +1,6 @@
 
 import {
     Box,
-    Container,
-    Stack,
     VStack,
     Text,
     HStack,
@@ -17,18 +15,16 @@ import { useEffect, useRef } from 'react';
 import { useResume } from "../../context";
 import { MdMail, MdLocalPhone, MdLocationPin } from "react-icons/md";
 import { RiLinkedinBoxFill } from "react-icons/ri";
-import html2canvas from 'html2canvas';
 
 export default function CV2() {
     const { theme, about, educationList, skills, workList, projects, certificates, printElem } = useResume();
     const imgStyle = {
-        width: "50%",
+        width: "115px",
         height: "115px",
         margin: "15px",
         borderRadius: "50%",
     };
     const componentRef = useRef(null);
-    // const [initialViewportWidth, setInitialViewportWidth] = useState(0);
 
     useEffect(() => {
         const handleResize = () => {
@@ -38,16 +34,10 @@ export default function CV2() {
             componentRef.current.style.transform = `scale(${scale})`;
         };
 
-        // const handleLoad = () => {
-        //     setInitialViewportWidth(window.innerWidth);
-        // };
-
         window.addEventListener('resize', handleResize);
-        // window.addEventListener('load', handleLoad);
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            // window.removeEventListener('load', handleLoad);
         };
     }, []);
 
@@ -302,7 +292,6 @@ export default function CV2() {
                                     ))}
                                 </Wrap>
                             </VStack>}
-
                         </VStack>
                     </HStack>
                 </div>

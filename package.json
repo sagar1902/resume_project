@@ -26,10 +26,12 @@
     "html2canvas": "^1.4.1",
     "react-files": "^3.0.0",
     "react-icons": "^4.9.0",
+    "react-image-crop": "^8.6.12",
     "react-redux": "^8.1.0",
     "react-router-dom": "^6.12.1",
     "react-to-print": "^2.14.13",
     "redux-persist": "^6.0.0",
+    "rsuite": "^5.35.1",
     "uuid": "^9.0.0",
     "vite": "^4.3.9",
     "webfontloader": "^1.6.28"
