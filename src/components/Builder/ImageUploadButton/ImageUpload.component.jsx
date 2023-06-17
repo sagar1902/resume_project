@@ -75,23 +75,172 @@ function ImageUpload() {
       xhr.send();
     });
   }
-
+//////////////original working
   const readFileContents = (file) => {
     const reader = new FileReader();
     reader.onload = () => {
       const fileContents = reader.result;
       // Convert to base64 data URL
       const base64DataUrl = `data:image/jpeg;base64,${btoa(fileContents)}`;
-      // Do something with the base64 data URL
+      resizeBase64Image(base64DataUrl, 500, 500).then((resizedImg)=>{////////////////can be temporary
+        setPicture(resizedImg)////////////////can be temporary
+      })////////////////can be temporary
       
-      setPicture(base64DataUrl);
+      // setPicture(base64DataUrl);
     };
     reader.onerror = () => {
       console.error('Error reading file.');
     };
     reader.readAsBinaryString(file);
   };
+///////////////
+  //////////////GPT resize try 1
+  // const readFileContents = (file, maxWidth, maxHeight) => {
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     const fileContents = reader.result;
+  //     const img = new Image();
+  //     img.onload = () => {
+  //       const resizedImage = resizeImage(img, maxWidth, maxHeight);
+  //       setPicture(resizedImage);
+  //     };
+  //     img.src = fileContents;
+  //   };
+  //   reader.onerror = () => {
+  //     console.error("Error reading file.");
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
+  
+  // function resizeImage(file, maxWidth, maxHeight, callback) {
+  //   console.log(file)
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  
+  //   reader.onload = function (event) {
+  //     const img = new Image();
+  //     img.src = event.target.result;
+  
+  //     img.onload = function () {
+  //       let width = img.width;
+  //       let height = img.height;
+  
+  //       // Calculate the new dimensions while maintaining the aspect ratio
+  //       if (width > maxWidth) {
+  //         height *= maxWidth / width;
+  //         width = maxWidth;
+  //       }
+  //       if (height > maxHeight) {
+  //         width *= maxHeight / height;
+  //         height = maxHeight;
+  //       }
+  
+  //       const canvas = document.createElement("canvas");
+  //       canvas.width = width;
+  //       canvas.height = height;
+  
+  //       const ctx = canvas.getContext("2d");
+  //       ctx.drawImage(img, 0, 0, width, height);
+  
+  //       // Get the resized image as a base64 data URL
+  //       const resizedImage = canvas.toDataURL("image/jpeg");
+  
+  //       // Invoke the callback function with the resized image data URL
+  //       callback(resizedImage);
+  //     };
+  //   };
+  // }
+  
 
+  ///////////GPT resize try 2
+
+  // function resizeImage(file, maxWidth, maxHeight) {
+  //   const img = new Image();
+  //   img.src = file.src;
+  
+  //   return new Promise((resolve) => {
+  //     img.onload = function () {
+  //       let width = img.width;
+  //       let height = img.height;
+  
+  //       // Calculate the new dimensions while maintaining the aspect ratio
+  //       if (width > maxWidth) {
+  //         height *= maxWidth / width;
+  //         width = maxWidth;
+  //       }
+  //       if (height > maxHeight) {
+  //         width *= maxHeight / height;
+  //         height = maxHeight;
+  //       }
+  
+  //       const canvas = document.createElement("canvas");
+  //       canvas.width = width;
+  //       canvas.height = height;
+  
+  //       const ctx = canvas.getContext("2d");
+  //       ctx.drawImage(img, 0, 0, width, height);
+  
+  //       // Get the resized image as a base64 data URL
+  //       const resizedImage = canvas.toDataURL("image/jpeg");
+  
+  //       resolve(resizedImage);
+  //     };
+  //   });
+  // }
+  
+
+  // async function readFileContents(file) {
+  //   const base64DataUrl = file.src; // Assuming file parameter is already in the format <img src="data:image/jpg;base64...">
+  
+  //   try {
+  //     const resizedImage = await resizeImage(base64DataUrl, 800, 600);
+  //     // Do something with the resized image (e.g., set it as state)
+  //     setPicture(resizedImage);
+  //   } catch (error) {
+  //     console.error("Error resizing image:", error);
+  //   }
+  // }
+  ///////////////another try
+
+  function resizeBase64Image(base64DataUrl, maxWidth, maxHeight) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = function () {
+        let width = img.width;
+        let height = img.height;
+  
+        // Calculate the new dimensions while maintaining the aspect ratio
+        if (width > maxWidth) {
+          height *= maxWidth / width;
+          width = maxWidth;
+        }
+        if (height > maxHeight) {
+          width *= maxHeight / height;
+          height = maxHeight;
+        }
+  
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+  
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+  
+        // Get the resized image as a base64 data URL
+        const resizedImage = canvas.toDataURL("image/jpeg");
+  
+        resolve(resizedImage);
+      };
+  
+      img.onerror = function () {
+        reject(new Error("Failed to load the image."));
+      };
+  
+      // Set the source of the image to the base64 data URL
+      img.src = base64DataUrl;
+    });
+  }
+  
 
 
   const onImageLoaded = image => {

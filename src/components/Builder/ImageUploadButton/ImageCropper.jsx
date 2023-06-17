@@ -54,7 +54,9 @@ const ImageCropper = ({ imageToCrop, onImageCropped, about, setAbout }) => {
   };
 
   return (
-    <div>
+    <div 
+    // style={{display: 'flex'}}
+    >
       <ReactCrop
         src={imageToCrop}
         crop={crop}
@@ -62,7 +64,9 @@ const ImageCropper = ({ imageToCrop, onImageCropped, about, setAbout }) => {
         onComplete={handleCropComplete}
       />
       {croppedImageUrl && (
-        <div>
+        <div 
+        style={{padding: '0px 40px'}}
+        >
           Preview:
           <img src={croppedImageUrl} alt="Cropped" style={{ width: "115px", height: "115px", margin: "15px", borderRadius: "50%"}}/>
         </div>
